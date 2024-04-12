@@ -7,12 +7,12 @@ import {
 } from "recharts";
 
 const AreaCard = ({ colors, percentFillValue, cardInfo }) => {
-  const filledValue = (percentFillValue / 100) * 360; // 360 degress for a full circle
+  const filledValue = (percentFillValue / 100) * 360; 
   const remainedValue = 360 - filledValue;
 
   const data = [
-    { name: "Remained", value: remainedValue },
-    { name: "Achieved Sales", value: filledValue },
+    { name: "autres", value: remainedValue },
+    { name: "pourcentages", value: filledValue },
   ];
 
   const renderTooltipContent = (value) => {

@@ -16,48 +16,48 @@ import "./AreaCharts.scss";
 const data = [
   {
     month: "Jan",
-    loss: 70,
-    profit: 100,
+    échecs: 70,
+    deposés: 100,
   },
   {
     month: "Feb",
-    loss: 55,
-    profit: 85,
+    échecs: 55,
+    deposés: 85,
   },
   {
     month: "Mar",
-    loss: 35,
-    profit: 90,
+    échecs: 35,
+    deposés: 90,
   },
   {
     month: "April",
-    loss: 90,
-    profit: 70,
+    échecs: 90,
+    deposés: 70,
   },
   {
     month: "May",
-    loss: 55,
-    profit: 80,
+    échecs: 55,
+    deposés: 80,
   },
   {
     month: "Jun",
-    loss: 30,
-    profit: 50,
+    échecs: 30,
+    deposés: 50,
   },
   {
     month: "Jul",
-    loss: 32,
-    profit: 75,
+    échecs: 32,
+    deposés: 75,
   },
   {
     month: "Aug",
-    loss: 62,
-    profit: 86,
+    échecs: 62,
+    deposés: 86,
   },
   {
     month: "Sep",
-    loss: 55,
-    profit: 78,
+    échecs: 55,
+    deposés: 78,
   },
 ];
 
@@ -79,12 +79,12 @@ const AreaBarChart = () => {
   return (
     <div className="bar-chart">
       <div className="bar-chart-info">
-        <h5 className="bar-chart-title">Total Revenue</h5>
+        <h5 className="bar-chart-title"> nombre de colis distribué par mois</h5>
         <div className="chart-info-data">
-          <div className="info-data-value">$50.4K</div>
+          <div className="info-data-value">50.4K</div>
           <div className="info-data-text">
             <FaArrowUpLong />
-            <p>5% than last month.</p>
+            <p>5% de plus depuis le mois dernier.</p>
           </div>
         </div>
       </div>
@@ -133,15 +133,15 @@ const AreaBarChart = () => {
               formatter={formatLegendValue}
             />
             <Bar
-              dataKey="profit"
-              fill="#475be8"
+              dataKey="deposés"
+              fill="var(--primary-color)"
               activeBar={false}
               isAnimationActive={false}
               barSize={24}
               radius={[4, 4, 4, 4]}
             />
             <Bar
-              dataKey="loss"
+              dataKey="échecs"
               fill="#e3e7fc"
               activeBar={false}
               isAnimationActive={false}

@@ -1,28 +1,15 @@
-import { useContext, useEffect, useRef } from "react";
-import { ThemeContext } from "../../context/ThemeContext";
-import { LIGHT_THEME } from "../../constants/themeConstants";
-import LogoBlue from "../../assets/images/logo_blue.svg";
-import LogoWhite from "../../assets/images/logo_white.svg";
-import {
-  MdOutlineAttachMoney,
-  MdOutlineBarChart,
-  MdOutlineClose,
-  MdOutlineCurrencyExchange,
-  MdOutlineGridView,
-  MdOutlineLogout,
-  MdOutlineMessage,
-  MdOutlinePeople,
-  MdOutlineSettings,
-  MdOutlineShoppingBag,
-} from "react-icons/md";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { FaBuilding, FaUserFriends } from "react-icons/fa";
+import { MdOutlineAttachMoney, MdOutlineBarChart, MdOutlineClose, MdOutlineCurrencyExchange, MdOutlineGridView, MdOutlineLogout, MdOutlineMessage, MdOutlinePeople, MdOutlineSettings, MdOutlineShoppingBag, MdArchive, MdOutlineDomain } from "react-icons/md";
 import "./Sidebar.scss";
 import { SidebarContext } from "../../context/SidebarContext";
 
+
 const Sidebar = () => {
-  const { theme } = useContext(ThemeContext);
   const { isSidebarOpen, closeSidebar } = useContext(SidebarContext);
   const navbarRef = useRef(null);
+  const [activeLink, setActiveLink] = useState("");
 
   // closing the navbar when clicked outside the sidebar area
   const handleClickOutside = (event) => {
@@ -42,6 +29,10 @@ const Sidebar = () => {
     };
   }, []);
 
+  const handleMenuClick = (link) => {
+    setActiveLink(link);
+  };
+
   return (
     <nav
       className={`sidebar ${isSidebarOpen ? "sidebar-show" : ""}`}
@@ -49,8 +40,8 @@ const Sidebar = () => {
     >
       <div className="sidebar-top">
         <div className="sidebar-brand">
-          <img src={theme === LIGHT_THEME ? LogoBlue : LogoWhite} alt="" />
-          <span className="sidebar-brand-text">tabernam.</span>
+          <div className="poste"></div>
+          <span className="sidebar-brand-text"> Paositra Malagasy</span>
         </div>
         <button className="sidebar-close-btn" onClick={closeSidebar}>
           <MdOutlineClose size={24} />
@@ -60,7 +51,7 @@ const Sidebar = () => {
         <div className="sidebar-menu">
           <ul className="menu-list">
             <li className="menu-item">
-              <Link to="/" className="menu-link active">
+              <Link to="/" className={`menu-link ${activeLink === "/" ? "active" : ""}`} onClick={() => handleMenuClick("/")}>
                 <span className="menu-link-icon">
                   <MdOutlineGridView size={18} />
                 </span>
@@ -68,79 +59,79 @@ const Sidebar = () => {
               </Link>
             </li>
             <li className="menu-item">
-              <Link to="/" className="menu-link">
+              <Link to="/" className={`menu-link ${activeLink === "/depot" ? "active" : ""}`} onClick={() => handleMenuClick("/depot")}>
                 <span className="menu-link-icon">
-                  <MdOutlineBarChart size={20} />
+                  <MdArchive size={20} />
                 </span>
-                <span className="menu-link-text">Statistics</span>
+                <span className="menu-link-text">Dépôt</span>
               </Link>
             </li>
-            <li className="menu-item">
-              <Link to="/" className="menu-link">
-                <span className="menu-link-icon">
-                  <MdOutlineAttachMoney size={20} />
-                </span>
-                <span className="menu-link-text">Payment</span>
-              </Link>
-            </li>
-            <li className="menu-item">
-              <Link to="/" className="menu-link">
-                <span className="menu-link-icon">
-                  <MdOutlineCurrencyExchange size={18} />
-                </span>
-                <span className="menu-link-text">Transactions</span>
-              </Link>
-            </li>
-            <li className="menu-item">
-              <Link to="/" className="menu-link">
-                <span className="menu-link-icon">
-                  <MdOutlineShoppingBag size={20} />
-                </span>
-                <span className="menu-link-text">Products</span>
-              </Link>
-            </li>
-            <li className="menu-item">
-              <Link to="/" className="menu-link">
-                <span className="menu-link-icon">
-                  <MdOutlinePeople size={20} />
-                </span>
-                <span className="menu-link-text">Customer</span>
-              </Link>
-            </li>
-            <li className="menu-item">
-              <Link to="/" className="menu-link">
-                <span className="menu-link-icon">
-                  <MdOutlineMessage size={18} />
-                </span>
-                <span className="menu-link-text">Messages</span>
-              </Link>
-            </li>
-          </ul>
-        </div>
+              <li className="menu-item">
+                <Link to="/" className={`menu-link ${activeLink === "/Agence" ? "active" : ""}`} onClick={() => handleMenuClick("/Agence")}>
+                  <span className="menu-link-icon">
+                    <FaBuilding size={20} />
+                  </span>
+                  <span className="menu-link-text">Agence</span>
+                </Link>
+              </li>
+              <li className="menu-item">
+                <Link to="/groupement" className={`menu-link ${activeLink === "/Groupement" ? "active" : ""}`} onClick={() => handleMenuClick("/Groupement")}>
+                  <span className="menu-link-icon">
+                    <MdOutlineDomain size={18} />
+                  </span>
+                  <span className="menu-link-text">Groupement</span>
+                </Link>
+              </li>
+              <li className="menu-item">
+                <Link to="/" className={`menu-link ${activeLink === "/Registre" ? "active" : ""}`} onClick={() => handleMenuClick("/Registre")}>
+                  <span className="menu-link-icon">
+                    <MdOutlineShoppingBag size={20} />
+                  </span>
+                  <span className="menu-link-text">Registre</span>
+                </Link>
+              </li>
+              <li className="menu-item">
+                <Link to="/user" className={`menu-link ${activeLink === "/Utilisateur" ? "active" : ""}`} onClick={() => handleMenuClick("/Utilisateur")}>
+                  <span className="menu-link-icon">
+                    <MdOutlinePeople size={20} />
+                  </span>
+                  <span className="menu-link-text">Utilisateur</span>
+                </Link>
+              </li>
+              <li className="menu-item">
+                <Link to="/" className={`menu-link ${activeLink === "/Destinataire" ? "active" : ""}`} onClick={() => handleMenuClick("/Destinataire")}>
+                  <span className="menu-link-icon">
+                    <FaUserFriends size={18} />
+                  </span>
+                  <span className="menu-link-text">Bénéficiaires</span>
+                </Link>
+              </li>
+            </ul>
+          </div>
 
-        <div className="sidebar-menu sidebar-menu2">
-          <ul className="menu-list">
-            <li className="menu-item">
-              <Link to="/" className="menu-link">
-                <span className="menu-link-icon">
-                  <MdOutlineSettings size={20} />
-                </span>
-                <span className="menu-link-text">Settings</span>
-              </Link>
-            </li>
-            <li className="menu-item">
-              <Link to="/" className="menu-link">
-                <span className="menu-link-icon">
-                  <MdOutlineLogout size={20} />
-                </span>
-                <span className="menu-link-text">Logout</span>
-              </Link>
-            </li>
-          </ul>
+          <div className="sidebar-menu sidebar-menu2">
+            <ul className="menu-list">
+              <li className="menu-item">
+                <Link to="/" className="menu-link">
+                  <span className="menu-link-icon">
+                    <MdOutlineSettings size={20} />
+                  </span>
+                  <span className="menu-link-text">Settings</span>
+                </Link>
+              </li>
+              <li className="menu-item">
+                <Link to="/" className="menu-link">
+                  <span className="menu-link-icon">
+                    <MdOutlineLogout size={20} />
+                  </span>
+                  <span className="menu-link-text">Logout</span>
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
-    </nav>
-  );
-};
+      </nav>
+    );
+  };
 
-export default Sidebar;
+  export default Sidebar;

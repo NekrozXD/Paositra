@@ -27,7 +27,7 @@
 
 // color mode toggle mixins
 @mixin lightMode {
-  --primary-color: #475be8;
+  --primary-color: #212683;
   --secondary-color: #fff;
   --background-color: #fafafa;
   --side-link-hover-color: #f6f6f6;
@@ -46,6 +46,8 @@
   --tbl-border-color: #f2f4ff;
   --scroll-track-bg-color: #fff;
   --scroll-thumb-bg-color: #e9e9e9;
+  --button-blue-color : #14174f;
+  --yellow-color : #fef102;
 }
 
 @mixin darkMode {
@@ -56,7 +58,7 @@
   --side-text-color: #e1e1e1;
   --logo-color: #fff;
   --xl-text-color: #ffff;
-  --lg-text-color: #f3f3f3;
+  --lg-text-color: #f3f3f3; 
   --base-text-color: #e0e0e0;
   --text-color-inverted: #fff;
   --bg-color-inverted: #292929;
@@ -68,6 +70,8 @@
   --tbl-border-color: ##383854;
   --scroll-track-bg-color: #2e2e48;
   --scroll-thumb-bg-color: #575777;
+  --button-blue-color : #475be8;
+  --yellow-color : #cecb09;
 }
 
 * {
@@ -75,6 +79,7 @@
   margin: 0;
   box-sizing: border-box;
   font-family: inherit;
+  text-decoration:none;
 }
 
 // color mode toggle in body
@@ -90,6 +95,8 @@ body {
     @include darkMode();
   }
 }
+
+
 
 a {
   text-decoration: none;

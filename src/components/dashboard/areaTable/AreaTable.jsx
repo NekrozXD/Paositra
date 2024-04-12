@@ -1,112 +1,69 @@
 import AreaTableAction from "./AreaTableAction";
 import "./AreaTable.scss";
 
-const TABLE_HEADS = [
-  "Products",
-  "Order ID",
-  "Date",
-  "Customer name",
-  "Status",
-  "Amount",
-  "Action",
-];
 
-const TABLE_DATA = [
-  {
-    id: 100,
-    name: "Iphone 13 Pro",
-    order_id: 11232,
-    date: "Jun 29,2022",
-    customer: "Afaq Karim",
-    status: "delivered",
-    amount: 400,
-  },
-  {
-    id: 101,
-    name: "Macbook Pro",
-    order_id: 11232,
-    date: "Jun 29,2022",
-    customer: "Afaq Karim",
-    status: "pending",
-    amount: 288,
-  },
-  {
-    id: 102,
-    name: "Apple Watch",
-    order_id: 11232,
-    date: "Jun 29,2022",
-    customer: "Afaq Karim",
-    status: "canceled",
-    amount: 500,
-  },
-  {
-    id: 103,
-    name: "Microsoft Book",
-    order_id: 11232,
-    date: "Jun 29,2022",
-    customer: "Afaq Karim",
-    status: "delivered",
-    amount: 100,
-  },
-  {
-    id: 104,
-    name: "Apple Pen",
-    order_id: 11232,
-    date: "Jun 29,2022",
-    customer: "Afaq Karim",
-    status: "delivered",
-    amount: 60,
-  },
-  {
-    id: 105,
-    name: "Airpods",
-    order_id: 11232,
-    date: "Jun 29,2022",
-    customer: "Afaq Karim",
-    status: "delivered",
-    amount: 80,
-  },
-];
+import { useState, useEffect } from "react";
+const getBaseUrl = () => {
+  const { hostname, protocol } = window.location;
+  return `${protocol}//${hostname}:8081/`; // Assuming backend is always on port 8081
+};
+
+const API_URL = getBaseUrl();
 
 const AreaTable = () => {
+
+  const [lastDeposits, setLastDeposits] = useState([]);
+
+  useEffect(() => {
+    const fetchLastDeposits = async () => {
+      try {
+        const response = await fetch(`${API_URL}envoi/last5`);
+        const data = await response.json();
+        setLastDeposits(data);
+      } catch (error) {
+        console.error('Error fetching last deposits:', error);
+      }
+    };
+  
+    fetchLastDeposits(); // Fetch data initially
+  
+    const intervalId = setInterval(() => {
+      fetchLastDeposits(); // Fetch data every 500ms
+    }, 500);
+  
+    // Clear interval when component is unmounted
+    return () => clearInterval(intervalId);
+  }, []);
+
   return (
     <section className="content-area-table">
       <div className="data-table-info">
-        <h4 className="data-table-title">Latest Orders</h4>
+        <h4 className="data-table-title">Derniers dépôts  </h4>
       </div>
       <div className="data-table-diagram">
         <table>
           <thead>
-            <tr>
-              {TABLE_HEADS?.map((th, index) => (
-                <th key={index}>{th}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {TABLE_DATA?.map((dataItem) => {
-              return (
-                <tr key={dataItem.id}>
-                  <td>{dataItem.name}</td>
-                  <td>{dataItem.order_id}</td>
-                  <td>{dataItem.date}</td>
-                  <td>{dataItem.customer}</td>
-                  <td>
-                    <div className="dt-status">
-                      <span
-                        className={`dt-status-dot dot-${dataItem.status}`}
-                      ></span>
-                      <span className="dt-status-text">{dataItem.status}</span>
-                    </div>
-                  </td>
-                  <td>${dataItem.amount.toFixed(2)}</td>
-                  <td className="dt-cell-action">
-                    <AreaTableAction />
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
+             <tr>
+        <th>éxpediteur</th>
+        <th>Destinataire</th>
+        <th>Numéro d'envoi</th>
+        <th>Poids</th>
+        <th style={{textAlign:'center'}} >Date de déposition</th>
+        <th>Bureau de départ</th>
+      </tr>
+    </thead>
+    <tbody>
+      {lastDeposits.map((deposit) => (
+        <tr key={deposit.Env_num}>
+          <td>{deposit.Env_exp}</td>
+          <td>{deposit.Env_dest}</td>
+          <td>{deposit.Env_num}</td>
+          <td>{deposit.Env_poids} g </td>
+          <td style={{textAlign:'center'}}>{deposit.Env_date_depot}</td>
+          <td style={{textAlign:'center', width:'250px'}}>{deposit.Env_agence_depot}</td>
+        </tr>
+      ))}
+    </tbody>
         </table>
       </div>
     </section>
